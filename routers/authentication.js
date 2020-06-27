@@ -88,8 +88,9 @@ router.post('/tokens/',async (req, res)=>{
             }
         });
         if(userInfo.length != 1){
+            log('Invalid password');
             res.status(400).send({
-                message:   "Invalid Information"
+                message:   "Invalid password or token"
             });
             return -2;
         }else 
