@@ -1,18 +1,18 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
-const Question = require('./question')
+const User = require('./user')
 const Answer = require('./answer')
 const Model = Sequelize.Model;
 
 class Sale extends Model {}
 Sale.init({
 
-question: {
-    type: Sequelize.INTEGER,
+user: {
+    type: Sequelize.STRING,
     allowNull: false,
     references: {
-        model: Question,
-        key: 'id',
+        model: User,
+        key: 'email',
     }
 },
 

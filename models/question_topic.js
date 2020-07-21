@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 const Question = require('./question');
-const Topic = require('./topic');
+const Favorite = require('./favorite');
 const Model = Sequelize.Model;
 
 class QuestionTopic extends Model {}
@@ -20,7 +20,7 @@ QuestionTopic.init({
       type: Sequelize.INTEGER,
       primaryKey: true,
       references: {
-          model: Topic,
+          model: Favorite,
           key: 'id'
       }
   }
