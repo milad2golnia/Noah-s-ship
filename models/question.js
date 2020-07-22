@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 const User = require('./user');
+const Favorite = require('./favorite');
 const Model = Sequelize.Model;
 
 class Question extends Model {}
@@ -26,18 +27,24 @@ text: {
     }
 },
 
-writer: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    references: {
-        model: User,
-        key: 'email',
-    }
-}
-
 }, { 
     sequelize,
     modelName: 'question'
-   });
+});
 
-module.exports = Question;
+Question.belongsTo(User);
+
+Question.belongsToMany(Favorite, {through: 'questionFavorite'});
+Favorite.belongsToMany(Question, {through: 'questionFavorite'});
+
+function validateQuestion(question) {
+    const schema = joi.object({
+        title: joi.string().min(3).max(255).required(),
+        text: joi.string().min(3).max(500).required()
+    })
+
+    return schema.validate(question)
+}
+
+exports.Question = Question;
+exports.validateQuestion = validateQuestion;

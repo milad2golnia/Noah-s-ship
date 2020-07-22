@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
+const Favorite = require('./favorite');
 const Model = Sequelize.Model;
 
 class User extends Model {}
@@ -45,6 +46,9 @@ User.init({
 }, { 
     sequelize,
     modelName: 'user'
-   });
+});
+
+User.belongsToMany(Favorite, {through: 'userFavorite'});
+Favorite.belongsToMany(User, {through: 'userFavorite'});
 
 module.exports = User;

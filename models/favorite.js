@@ -26,6 +26,6 @@ Favorite.init({
 }, { 
     sequelize,
     modelName: 'favorite'
-   });
+});
 
 module.exports = Favorite;
