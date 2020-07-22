@@ -7,6 +7,7 @@ const log = debug('app::user');
 const router = express.Router();
 
 
+
 router.post('/', async (req, res)=>{
     const schema = joi.object({
         name: joi.string().min(1).max(250).required(),
