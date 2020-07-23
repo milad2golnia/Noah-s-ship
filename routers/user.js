@@ -25,7 +25,7 @@ router.post('/', async (req, res)=>{
     }
 
     try{
-        userDB.sync();
+        //userDB.sync();
         log(req.body.password);
         const user = await userDB.create({
             email: req.body.email,

@@ -18,8 +18,7 @@ User.init({
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      min: 3,
-      max: 255,
+      len: [3, 255],
       notEmpty: true,
     }
   },
@@ -37,8 +36,7 @@ User.init({
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
-      min: 8,
-      max: 255,
+      len: [8, 255],
       notEmpty: false
     }
   }

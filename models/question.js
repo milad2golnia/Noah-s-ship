@@ -11,8 +11,7 @@ title: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-        min: 3,
-        max: 255,
+        len: [3, 255],
         notEmpty: true
     }
 },
@@ -21,8 +20,7 @@ text: {
     type: Sequelize.TEXT,
     allowNull: false,
     validate: {
-      min: 3,
-      max: 500,
+      len: [3, 500],
       notEmpty: true,
     }
 },
