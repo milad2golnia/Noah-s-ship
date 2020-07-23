@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 const User = require('./user');
+const joi = require('@hapi/joi');
 const Favorite = require('./favorite');
 const Model = Sequelize.Model;
 
