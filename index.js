@@ -8,3 +8,10 @@ const sequelize = require('./database');
 sequelize.sync({alter: true});
 
 
+User.sync();
+Favorite.sync();
+UserFavorite.sync();
+Question.sync();
+Answer.sync();
+Sale.sync();
+QuestionTopic.sync();
