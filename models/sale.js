@@ -7,24 +7,6 @@ const Model = Sequelize.Model;
 class Sale extends Model {}
 Sale.init({
 
-user: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    references: {
-        model: User,
-        key: 'email',
-    }
-},
-
-answer: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-        model: Answer,
-        key: 'id',
-    }
-},
-
 price: {
     type: Sequelize.FLOAT,
     allowNull: false,
@@ -47,6 +29,9 @@ point: {
 }, { 
     sequelize,
     modelName: 'sale'
-   });
+});
+
+Sale.belongsTo(User);
+Sale.belongsTo(Answer);
 
 module.exports = Sale;

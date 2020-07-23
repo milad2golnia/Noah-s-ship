@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
+const Favorite = require('./favorite');
 const Model = Sequelize.Model;
 
 class User extends Model {}
@@ -17,8 +18,7 @@ User.init({
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      min: 3,
-      max: 255,
+      len: [3, 255],
       notEmpty: true,
     }
   },
@@ -36,8 +36,7 @@ User.init({
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
-      min: 8,
-      max: 255,
+      len: [8, 255],
       notEmpty: false
     }
   }
@@ -45,6 +44,9 @@ User.init({
 }, { 
     sequelize,
     modelName: 'user'
-   });
+});
+
+User.belongsToMany(Favorite, {through: 'userFavorite'});
+Favorite.belongsToMany(User, {through: 'userFavorite'});
 
 module.exports = User;

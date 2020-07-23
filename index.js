@@ -1,10 +1,12 @@
-const User = require('./models/user');
-const Favorite = require('./models/favorite');
-const UserFavorite = require('./models/user_favorite');
-const Question = require('./models/question');
-const Answer = require('./models/answer');
-const Sale = require('./models/sale');
-const QuestionTopic = require('./models/question_topic');
+const user = require('./models/user');
+const question = require('./models/question');
+const answer = require('./models/answer');
+const favorite = require('./models/favorite');
+const sale = require('./models/sale');
+const sequelize = require('./database');
+
+sequelize.sync({alter: true});
+
 
 User.sync();
 Favorite.sync();

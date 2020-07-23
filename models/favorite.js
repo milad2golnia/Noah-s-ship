@@ -9,8 +9,7 @@ Favorite.init({
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
-        min: 3,
-        max: 255
+        len: [3, 255]
       }
   },
 
@@ -18,14 +17,13 @@ Favorite.init({
     type: Sequelize.TEXT,
     allowNull: true,
     validate: {
-        min: 3,
-        max: 255
+      len: [3, 255]
     }
   }
 
 }, { 
     sequelize,
     modelName: 'favorite'
-   });
+});
 
 module.exports = Favorite;
