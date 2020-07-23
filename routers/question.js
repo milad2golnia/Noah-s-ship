@@ -100,11 +100,6 @@ router.get('/info/:id', async (req, res)=>{
         });
     }
 })
-
-
-
-
-
           
 router.post('/', async (req, res)=>{
     const result = validateQuestion(req.body);

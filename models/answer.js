@@ -25,12 +25,18 @@ text: {
     }
 },
 
+confirmed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+}
+
 }, { 
     sequelize,
     modelName: 'answer'
 });
 
 Answer.belongsTo(User);
+Answer.belongsTo(User, {foreignKey: {name: 'supervisorId'}});
 Answer.belongsTo(Question);
 
 module.exports = Answer;

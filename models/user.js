@@ -39,6 +39,16 @@ User.init({
       len: [8, 255],
       notEmpty: false
     }
+  },
+
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+
+  isSupervisor: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 
 }, { 
