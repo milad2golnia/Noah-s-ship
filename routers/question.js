@@ -1,13 +1,10 @@
 const express = require('express');
 const debug = require('debug');
 const {Question, validateQuestion} = require('../models/question');
-const log = debug('app::question');
-const router = express.Router();
-const auth = require('../middleware/auth');
-
 const joi = require('@hapi/joi');
 const questionDB = require('../models/question');
-
+const User = require('../models/user');
+const category= require('../models/favorite');
 
 const router = express.Router();
 const log = debug('app::question');
@@ -30,11 +27,22 @@ router.get('/list/:offset/:limit', async (req, res) =>{
     }
 
     try{
-        const result = await questionDB.findAll({
-            attributes: ['id', 'title', 'writer', 'createdAt'],
+        const result = await questionDB.Question.findAll({
+            attributes: ['id', 'title', 'createdAt'],
             limit: _limit,
             offset: _offset,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            include: [{
+                model: User,
+                attributes: ['name', 'email']
+            },{
+                model: category,
+                attributes: ['name'],
+                through:{
+                    attributes: []
+                }
+            }
+            ]
         });
         res.send(result);
     }catch(error){
@@ -44,8 +52,61 @@ router.get('/list/:offset/:limit', async (req, res) =>{
         });
     }
 });
+
+
+
+
+router.get('/info/:id', async (req, res)=>{
+    const _id = req.params.id;
+    
+    if(_id < 0){
+        log('Invalid id', _id);
+        res.status(400).send({
+            message: 'خطا! سوال خواسته شده وجود ندارد.'
+        });
+    }
+
+    try{
+        const result = await questionDB.Question.findAll({
+            where:{
+                id: _id
+            },
+            include: [{
+                model: User
+            },{
+                model: category,
+                through:{
+                    attributes: []
+                }
+            }]
+        });
+        if(result.length == 0){
+            log('Requestd question doesn\' exist; questions id: ', id);
+            return res.status(404).send({
+                message: 'خطا! اطلاعات مورد نظر وجود ندارد'
+            });
+        }
+        if(result.length > 1){
+            log('More than one question associated with one Id: ', JSON.stringify(result));
+            res.status(500).send({
+                message: 'خطا! دیتابیس آسیب دیده است'
+            });
+        }
+        res.send(result);
+    }catch(error){
+        log('Error when retrieving question info: ',error.message);
+        return res.status(500).send({
+            message: 'خطا! لطفا بعدا تلاش نمایید'
+        });
+    }
+})
+
+
+
+
+
           
-router.post('/', auth, async (req, res)=>{
+router.post('/', async (req, res)=>{
     const result = validateQuestion(req.body);
 
     if(result.error){
