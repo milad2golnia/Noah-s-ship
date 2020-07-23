@@ -6,6 +6,7 @@ const user = require('./routers/user');
 const CO = require('./middleWares/crossOrigin');
 const syncDB = require('./index');
 const question = require('./routers/question');
+const gateway = require('./middleWares/auth');
 
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(CO);
 app.use('/auth/', auth);
 app.use('/user/', user);
+app.use(gateway);
 app.use('/question/', question);
 const log = debug('app::start');
 

@@ -1,12 +1,9 @@
 const express = require('express');
 const debug = require('debug');
 const {Question, validateQuestion} = require('../models/question');
-const log = debug('app::question');
-const router = express.Router();
-const auth = require('../middleware/auth');
-
 const joi = require('@hapi/joi');
 const questionDB = require('../models/question');
+const User = require('../models/user');
 
 
 const router = express.Router();
@@ -30,11 +27,12 @@ router.get('/list/:offset/:limit', async (req, res) =>{
     }
 
     try{
-        const result = await questionDB.findAll({
-            attributes: ['id', 'title', 'writer', 'createdAt'],
+        const result = await questionDB.Question.findAll({
+            attributes: ['id', 'title', 'createdAt'],
             limit: _limit,
             offset: _offset,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            include: User
         });
         res.send(result);
     }catch(error){
@@ -44,8 +42,35 @@ router.get('/list/:offset/:limit', async (req, res) =>{
         });
     }
 });
+
+
+
+
+router.get('/info/:id', async (req, res)=>{
+    const _id = req.params.id;
+    
+    if(_id < 0){
+        log('Invalid id', _id);
+        res.status(400).send({
+            message: 'خطا! سوال خواسته شده وجود ندارد.'
+        });
+    }
+
+    try{
+        const result = await questionDB.findAll({
+            include: [QTDB]
+        })
+    }catch(error){
+        log('Error when retrieving question info: ',error.message);
+    }
+})
+
+
+
+
+
           
-router.post('/', auth, async (req, res)=>{
+router.post('/', async (req, res)=>{
     const result = validateQuestion(req.body);
 
     if(result.error){
