@@ -11,14 +11,14 @@ router.get('/:offset/:limit', async (req, res) =>{
 
     if (!_offset || !_limit){
         log('wrong offset or limit: ', _offset, ' ', limit);
-        res.sendStatus(400).send({
+        res.status(400).send({
             message: messages.emptyOffsetLimit
         });
     }
 
     if(_offset <0 || _limit < 0){
         log('negetive offset or limit: ', _offset, ' ', limit);
-        res.sendStatus(400).send({
+        res.status(400).send({
             message: messages.negetiveOffsetLimit
         });
     }
@@ -33,7 +33,7 @@ router.get('/:offset/:limit', async (req, res) =>{
         res.send(result);
     }catch(error){
         log('Error when sending question paged: ', error.message);
-        res.sendStatus(500).send({
+        res.status(500).send({
             message: messages.error500
         });
     }

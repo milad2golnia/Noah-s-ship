@@ -1,7 +1,6 @@
 const express = require('express');
 const debug = require('debug');
 const {Question, validateQuestion} = require('../models/question');
-const joi = require('@hapi/joi');
 const questionDB = require('../models/question');
 const User = require('../models/user');
 const category= require('../models/favorite');
@@ -9,7 +8,7 @@ const auth = require('../middleWares/auth');
 const router = express.Router();
 const log = debug('app::question');
 
-router.get('/list/:offset/:limit', async (req, res) =>{
+router.get('/list/:offset/:limit', auth, async (req, res) =>{
     const _offset = req.params.offset;
     const _limit = req.params.limit;
 
@@ -28,7 +27,7 @@ router.get('/list/:offset/:limit', async (req, res) =>{
 
     try{
         const result = await questionDB.Question.findAll({
-            attributes: ['id', 'title', 'createdAt'],
+            attributes: ['id', 'text', 'title', 'createdAt'],
             limit: _limit,
             offset: _offset,
             order: [['createdAt', 'DESC']],
@@ -56,7 +55,7 @@ router.get('/list/:offset/:limit', async (req, res) =>{
 
 
 
-router.get('/info/:id', async (req, res)=>{
+router.get('/info/:id', auth, async (req, res)=>{
     const _id = req.params.id;
     
     if(_id < 0){
@@ -106,7 +105,7 @@ router.post('/', auth, async (req, res)=>{
 
     if(result.error){
         log('Invalid request: ', result.error);
-        return res.sendStatus(400).send({
+        return res.status(400).send({
             message: "check the sending fields"
             });
     }
@@ -118,16 +117,13 @@ router.post('/', auth, async (req, res)=>{
             userEmail: req.user.email
             //set topic (optional)
         });
-        return res.sendStatus(200).send(question.id);
+        return res.status(200).send(question);
     }catch(error){
         log("Error when adding question: ", error.message);
-        return res.sendStatus(500).send({
+        return res.status(500).send({
             message: "Internal error! please try again later"
         });
     }
 });
-
-
-
 
 module.exports = router;
