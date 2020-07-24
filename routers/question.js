@@ -5,7 +5,7 @@ const joi = require('@hapi/joi');
 const questionDB = require('../models/question');
 const User = require('../models/user');
 const category= require('../models/favorite');
-
+const auth = require('../middleWares/auth');
 const router = express.Router();
 const log = debug('app::question');
 
@@ -101,7 +101,7 @@ router.get('/info/:id', async (req, res)=>{
     }
 })
           
-router.post('/', async (req, res)=>{
+router.post('/', auth, async (req, res)=>{
     const result = validateQuestion(req.body);
 
     if(result.error){

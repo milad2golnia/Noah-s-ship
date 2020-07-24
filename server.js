@@ -9,8 +9,6 @@ const syncDB = require('./index');
 const question = require('./routers/question');
 const gateway = require('./middleWares/auth');
 const cors = require('cors');
-
-
 const app = express();
 
 const share = express.static("public");
@@ -21,22 +19,9 @@ if(process.env.NODE_ENV == "development"){
 }
 
 app.use(express.json());
-app.use(gateway);
+//app.use(gateway);
 app.use(CO);
-
-const corsOpts = {
-	origin: '*',
-  
-	methods: [
-	  'GET',
-	  'POST',
-	],
-  
-	allowedHeaders: [
-	  'Content-Type',
-	],
-  };
-app.use(cors(corsOpts))
+app.options('*', cors()) 
 
 app.use('/auth/', auth);
 app.use('/user/', user);
