@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const debug = require('debug');
 const auth = require('./routers/authentication');
 const user = require('./routers/user');
+const favorite = require('./routers/favorite');
 const CO = require('./middleWares/crossOrigin');
 const syncDB = require('./index');
 const question = require('./routers/question');
@@ -24,9 +25,10 @@ app.use('/auth/', auth);
 app.use('/user/', user);
 app.use(gateway);
 app.use('/question/', question);
+app.use('/favorite/', favorite);
 const log = debug('app::start');
 
-const port = process.env.port || 3001;
+const port = process.env.port || 3000;
 
 app.listen(port, async()=>{
 	log(`Server started on port ${port}`);

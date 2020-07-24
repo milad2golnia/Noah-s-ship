@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
-const Favorite = require('./favorite');
+const {Favorite} = require('./favorite');
 const Model = Sequelize.Model;
 
 class User extends Model {}

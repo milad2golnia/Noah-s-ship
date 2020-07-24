@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
+const joi = require('@hapi/joi');
+
 const Model = Sequelize.Model;
 
 class Favorite extends Model {}
@@ -26,4 +28,14 @@ Favorite.init({
     modelName: 'favorite'
 });
 
-module.exports = Favorite;
+function validateFavorite(favorite) {
+  const schema = joi.object({
+      title: joi.string().min(3).max(255).required(),
+      description: joi.string().min(3).max(255)
+  })
+
+  return schema.validate(favorite)
+}
+
+exports.Favorite = Favorite;
+exports.validateFavorite = validateFavorite;

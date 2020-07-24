@@ -2,11 +2,8 @@ const express = require('express');
 const debug = require('debug');
 const joi = require('@hapi/joi');
 const userDB = require('../models/user');
-
 const log = debug('app::user');
 const router = express.Router();
-
-
 
 router.post('/', async (req, res)=>{
     const schema = joi.object({
@@ -26,7 +23,6 @@ router.post('/', async (req, res)=>{
     }
 
     try{
-        //userDB.sync();
         log(req.body.password);
         const user = await userDB.create({
             email: req.body.email,

@@ -36,7 +36,7 @@ router.get('/list/:offset/:limit', async (req, res) =>{
                 model: User,
                 attributes: ['name', 'email']
             },{
-                model: category,
+                model: category.Favorite,
                 attributes: ['name'],
                 through:{
                     attributes: []
@@ -74,7 +74,7 @@ router.get('/info/:id', async (req, res)=>{
             include: [{
                 model: User
             },{
-                model: category,
+                model: category.Favorite,
                 through:{
                     attributes: []
                 }
