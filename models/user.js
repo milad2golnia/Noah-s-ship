@@ -49,8 +49,13 @@ User.init({
   isSupervisor: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  
+  isPaid: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
-
+  
 }, { 
     sequelize,
     modelName: 'user'
