@@ -19,11 +19,13 @@ if(process.env.NODE_ENV == "development"){
 }
 
 app.use(express.json());
-//app.use(gateway);
 app.use(CO);
 app.options('*', cors()) 
 
 app.use('/auth/', auth);
+
+app.use(gateway);
+
 app.use('/user/', user);
 app.use('/question/', question);
 app.use('/favorite/', favorite);

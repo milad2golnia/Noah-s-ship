@@ -19,7 +19,8 @@ Transaction.init({
     type: Sequelize.FLOAT,
     allowNull: false,
     validate: {
-        min: 0,
+        min: -400000,
+        max: 400000,
         notEmpty: false
     }
   },
