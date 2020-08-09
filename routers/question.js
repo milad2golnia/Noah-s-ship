@@ -1,12 +1,14 @@
 const express = require('express');
 const debug = require('debug');
-const {Question, validateQuestion} = require('../models/question');
-const questionDB = require('../models/question');
+const QuestionModel = require('../models/question');
 const User = require('../models/user');
 const category= require('../models/favorite');
 const auth = require('../middleWares/auth');
 const router = express.Router();
 const log = debug('app::question');
+const QuestionFavoriteModel = require('../models/questionFavorite');
+const messages = require('../messages');
+const QuestionFavorite = require('../models/questionFavorite');
 
 router.get('/list/:offset/:limit', auth, async (req, res) =>{
     const _offset = req.params.offset;
@@ -15,18 +17,18 @@ router.get('/list/:offset/:limit', auth, async (req, res) =>{
     if (!_offset || !_limit){
         log('wrong offset or limit: ', _offset, ' ', limit);
         res.status(400).send({
-            message: 'خطا! لطفا بازه ی سوالات مورد نظر را مشخص کنید.'
+            message: messages.emptyOffsetLimit
         });
     }
 
     if(_offset <0 || _limit < 0){
         res.status(500).send({
-            message: 'خطا! پارامترهای ارسالی باید دارای مقداری مثبت باشند.'
+            message: messages.negetiveOffsetLimit
         });
     }
 
     try{
-        const result = await questionDB.Question.findAll({
+        const result = await QuestionModel.Question.findAll({
             attributes: ['id', 'text', 'title', 'createdAt'],
             limit: _limit,
             offset: _offset,
@@ -47,12 +49,10 @@ router.get('/list/:offset/:limit', auth, async (req, res) =>{
     }catch(error){
         log('Error when sending question paged: ', error.message);
         res.status(500).send({
-            message: 'خطا! لطفا بعدا تلاش نمایید'
+            message: messages.error500
         });
     }
 });
-
-
 
 
 router.get('/info/:id', auth, async (req, res)=>{
@@ -61,12 +61,12 @@ router.get('/info/:id', auth, async (req, res)=>{
     if(_id < 0){
         log('Invalid id', _id);
         res.status(400).send({
-            message: 'خطا! سوال خواسته شده وجود ندارد.'
+            message: messages.unavailable
         });
     }
 
     try{
-        const result = await questionDB.Question.findAll({
+        const result = await QuestionModel.Question.findAll({
             where:{
                 id: _id
             },
@@ -82,46 +82,55 @@ router.get('/info/:id', auth, async (req, res)=>{
         if(result.length == 0){
             log('Requestd question doesn\' exist; questions id: ', id);
             return res.status(404).send({
-                message: 'خطا! اطلاعات مورد نظر وجود ندارد'
+                message: messages.unavailable
             });
         }
         if(result.length > 1){
             log('More than one question associated with one Id: ', JSON.stringify(result));
             res.status(500).send({
-                message: 'خطا! دیتابیس آسیب دیده است'
+                message: messages.error500
             });
         }
         res.send(result);
     }catch(error){
         log('Error when retrieving question info: ',error.message);
         return res.status(500).send({
-            message: 'خطا! لطفا بعدا تلاش نمایید'
+            message: messages.error500
         });
     }
 })
           
 router.post('/', auth, async (req, res)=>{
-    const result = validateQuestion(req.body);
+    const result = QuestionModel.validateQuestion(req.body);
 
     if(result.error){
         log('Invalid request: ', result.error);
         return res.status(400).send({
-            message: "check the sending fields"
+            message: messages.error400
             });
     }
 
     try{
-        const question = await Question.create({
+        const question = await QuestionModel.Question.create({
             title: req.body.title,
             text: req.body.text,
             userEmail: req.user.email
-            //set topic (optional)
         });
+
+        const favorites = req.body.favorites;
+        
+        for (favorite of favorites){
+            await QuestionFavoriteModel.create({
+                questionId: question.id,
+                favoriteId: favorite 
+            });
+        }
+
         return res.status(200).send(question);
     }catch(error){
         log("Error when adding question: ", error.message);
         return res.status(500).send({
-            message: "Internal error! please try again later"
+            message: messages.error500
         });
     }
 });

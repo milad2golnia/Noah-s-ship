@@ -3,6 +3,7 @@ const sequelize = require('../database');
 const User = require('./user');
 const joi = require('@hapi/joi');
 const {Favorite} = require('./favorite');
+const QuestionFavorite = require('./questionFavorite');
 const Model = Sequelize.Model;
 
 class Question extends Model {}
@@ -38,13 +39,14 @@ isAnswered: {
 
 Question.belongsTo(User);
 
-Question.belongsToMany(Favorite, {through: 'questionFavorite'});
-Favorite.belongsToMany(Question, {through: 'questionFavorite'});
+Question.belongsToMany(Favorite, {through: QuestionFavorite});
+Favorite.belongsToMany(Question, {through: QuestionFavorite});
 
 function validateQuestion(question) {
     const schema = joi.object({
         title: joi.string().min(3).max(255).required(),
-        text: joi.string().min(3).max(500).required()
+        text: joi.string().min(3).max(500).required(),
+        favorites: joi.array()
     })
 
     return schema.validate(question)

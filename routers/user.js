@@ -4,6 +4,9 @@ const joi = require('@hapi/joi');
 const userDB = require('../models/user');
 const rand = require('randomatic');
 const Trans = require('../models/transaction');
+const { Favorite } = require('../models/favorite');
+const UserFavortieModel = require('../models/userFavorite');
+const UserFavorite = require('../models/userFavorite');
 const log = debug('app::user');
 const router = express.Router();
 
@@ -12,7 +15,8 @@ router.post('/', async (req, res)=>{
         name: joi.string().min(1).max(250).required(),
         email: joi.string().email().required(),
         password: joi.string().min(8).max(250).required(),
-        phone: joi.string().min(1).max(250)             //BUG: shoud set the length, maybe 11
+        phone: joi.string().min(1).max(250),             //BUG: shoud set the length, maybe 11
+        favorites: joi.array()
     }).unknown(true);                                   //BUG: shouldn't use unkown
 
     const result = schema.validate(req.body);
@@ -32,6 +36,16 @@ router.post('/', async (req, res)=>{
             password: req.body.password,
             phone: req.body.phone
         });
+
+        const favorites = req.body.favorites;
+
+        for (favorite of favorites){
+            await UserFavorite.create({
+                userEmail: user.email,
+                favoriteId: favorite
+            })
+        }
+        
         return res.send(user);
     }catch(error){
         log("Error when adding user: ", error.message);

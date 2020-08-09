@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 const User = require('./user')
-const Answer = require('./answer')
+const {Answer} = require('./answer')
 const Model = Sequelize.Model;
 
 class Sale extends Model {}
