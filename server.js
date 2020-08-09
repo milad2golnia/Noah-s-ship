@@ -5,8 +5,8 @@ const auth = require('./routers/authentication');
 const user = require('./routers/user');
 const favorite = require('./routers/favorite');
 const CO = require('./middleWares/crossOrigin');
-const syncDB = require('./index');
 const question = require('./routers/question');
+const answer = require('./routers/answer');
 const gateway = require('./middleWares/auth');
 const cors = require('cors');
 const app = express();
@@ -29,6 +29,7 @@ app.use(gateway);
 app.use('/user/', user);
 app.use('/question/', question);
 app.use('/favorite/', favorite);
+app.use('/answer/', answer);
 
 const log = debug('app::start');
 

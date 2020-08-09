@@ -4,7 +4,6 @@ const joi = require('@hapi/joi');
 const userDB = require('../models/user');
 const rand = require('randomatic');
 const Trans = require('../models/transaction');
-
 const log = debug('app::user');
 const router = express.Router();
 

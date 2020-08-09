@@ -26,6 +26,11 @@ text: {
     }
 },
 
+isAnswered: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+}
+
 }, { 
     sequelize,
     modelName: 'question'
