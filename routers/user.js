@@ -4,10 +4,9 @@ const joi = require('@hapi/joi');
 const userDB = require('../models/user');
 const rand = require('randomatic');
 const Trans = require('../models/transaction');
-const { Favorite } = require('../models/favorite');
 const UserFavortieModel = require('../models/userFavorite');
-const UserFavorite = require('../models/userFavorite');
 const log = debug('app::user');
+const messages = require('../messages');
 const router = express.Router();
 
 router.post('/', async (req, res)=>{
@@ -28,6 +27,10 @@ router.post('/', async (req, res)=>{
         });
     }
 
+    const _user = userDB.findByPk(req.body.email)
+
+    if (_user) return res.status(200).send({message: messages.existsUser})
+
     try{
         log(req.body.password);
         const user = await userDB.create({
@@ -40,7 +43,7 @@ router.post('/', async (req, res)=>{
         const favorites = req.body.favorites;
 
         for (favorite of favorites){
-            await UserFavorite.create({
+            await UserFavortieModel.create({
                 userEmail: user.email,
                 favoriteId: favorite
             })
