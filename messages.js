@@ -5,6 +5,8 @@ const error500 = 'خطا سرور! لطفا بعدا تلاش نمایید'
 const createAnswerNotAllowed = 'شما اجازه ارسال پاسخ را ندارید'
 const unavailable = 'اطلاعات خواسته شده وجود ندارد'
 const existsUser = 'این ایمیل قبلا ثبت شده است'
+const notAllowed = 'خطا! شما اجازه ی انجام این عملیات را ندارید.'
+const successful = 'درخواست شما با موفقیت انجام شد.'
 
 exports.emptyOffsetLimit = emptyOffsetLimit;
 exports.negetiveOffsetLimit = negetiveOffsetLimit;
@@ -13,3 +15,5 @@ exports.error400 = error400;
 exports.error500 = error500;
 exports.unavailable = unavailable
 exports.existsUser = existsUser;
+exports.notAllowed = notAllowed;
+exports.successful = successful;
