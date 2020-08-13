@@ -23,7 +23,8 @@ async function getTokens(info){
             );
 
             const _accessToken = jwt.sign({
-                email: info.email
+                email: info.email,
+                admin : info.isAdmin
             },
             config.get('privateKey'),
             {
@@ -81,7 +82,7 @@ router.post('/tokens/',async (req, res)=>{
     try{
         userDB.sync(); 
         const userInfo = await userDB.findAll({
-            attributes: ['email', 'password'],
+            attributes: ['email', 'password', 'isAdmin'],
             where: {
                 email: _email,
                 password: _password 

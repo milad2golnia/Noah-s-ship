@@ -58,4 +58,10 @@ router.post('/', async (req, res)=>{
 
 });
 
+
+
+router.get('/list/:offset/:limit', async ()=>{
+    
+})
+
 module.exports = router;
