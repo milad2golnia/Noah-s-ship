@@ -4,6 +4,7 @@ const debug = require('debug');
 const auth = require('./routers/authentication');
 const user = require('./routers/user');
 const favorite = require('./routers/favorite');
+const sale = require('./routers/sale');
 const CO = require('./middleWares/crossOrigin');
 const question = require('./routers/question');
 const answer = require('./routers/answer');
@@ -30,6 +31,7 @@ app.use('/user/', user);
 app.use('/question/', question);
 app.use('/favorite/', favorite);
 app.use('/answer/', answer);
+app.use('/sale/', sale);
 
 const log = debug('app::start');
 

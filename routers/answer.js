@@ -16,7 +16,7 @@ router.post('/', async (req, res)=>{
     const _result = AnswerModel.validateAnswer(req.body);
 
     if(_result.error){
-        log('Invalid request: ', result.error);
+        log('Invalid request: ', _result.error);
         return res.status(400).send({
             message: messages.error400
         });

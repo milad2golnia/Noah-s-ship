@@ -41,8 +41,6 @@ async function getTokens(info){
     })
 }
 
-
-
 router.post('/tokens/',async (req, res)=>{
     var schema = joi.object({
         email: joi.string().email().max(250).required(),
