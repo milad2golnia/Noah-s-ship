@@ -33,7 +33,8 @@ async function getTokens(info){
 
             resolve({
                 refreshToken: _refreshToken,
-                accessToken: _accessToken
+                accessToken: _accessToken,
+                isSupervisor: info.isAdmin
             });
         }catch(error){
             log('Error when creating tokens: ', error.message);
