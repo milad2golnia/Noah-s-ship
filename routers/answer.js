@@ -168,7 +168,7 @@ router.get('/:id', async (req, res)=>{
     }
 
     try{
-        const result =await saleModel.findAll({
+        const result =await saleModel.Sale.findAll({
             where:{
                 answerId: id,
                 userEmail: req.user.email
