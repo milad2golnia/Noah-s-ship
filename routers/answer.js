@@ -97,6 +97,7 @@ router.get('/list/:questionID/:_offset/:_limit', async (req, res)=>{
             whereClause = {
                 confirmed: true
             }
+        whereClause.questionId = QID;
         const result = await AnswerModel.Answer.findAll({
             attributes: ['id', 'title', 'updatedAt', 'userEmail', 'confirmed'],
             limit: limit,
