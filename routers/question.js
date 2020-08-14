@@ -9,6 +9,8 @@ const log = debug('app::question');
 const QuestionFavoriteModel = require('../models/questionFavorite');
 const messages = require('../messages');
 const QuestionFavorite = require('../models/questionFavorite');
+const {Op} = require('sequelize');
+const AnswerModel = require('../models/answer');
 
 router.get('/list/:offset/:limit', auth, async (req, res) =>{
     const _offset = req.params.offset;
@@ -45,6 +47,33 @@ router.get('/list/:offset/:limit', auth, async (req, res) =>{
             }
             ]
         });
+
+        var whereClause;
+        var attributes;
+        if(!req.user.admin){
+            whereClause = {
+                confirmed: true
+            }
+            attributes = [
+                'id', 'title', 'updatedAt', 'userEmail', 'confirmed'
+            ]
+        }else{
+            whereClause = {
+                confirmed:{
+                    [Op.or]: [true, null]
+                }
+            };
+        }
+        
+        for (i in result){
+            whereClause.questionId = result[i].id;
+            result[i].setDataValue("Answers", await AnswerModel.Answer.findAll({
+                attributes: attributes,
+                order: [['createdAt', 'DESC']],
+                where:whereClause
+            }) );
+        }
+        
         res.send(result);
     }catch(error){
         log('Error when sending question paged: ', error.message);

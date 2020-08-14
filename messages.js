@@ -6,6 +6,8 @@ const createAnswerNotAllowed = 'شما اجازه ارسال پاسخ را ند�
 const unavailable = 'اطلاعات خواسته شده وجود ندارد'
 const existsUser = 'این ایمیل قبلا ثبت شده است'
 const unConfirmedAnswer = 'این پاسخ تایید نشده است'
+const notAllowed = 'خطا! شما اجازه ی انجام این عملیات را ندارید.'
+const successful = 'درخواست شما با موفقیت انجام شد.'
 
 exports.emptyOffsetLimit = emptyOffsetLimit;
 exports.negetiveOffsetLimit = negetiveOffsetLimit;
@@ -15,3 +17,5 @@ exports.error500 = error500;
 exports.unavailable = unavailable
 exports.existsUser = existsUser;
 exports.unConfirmedAnswer = unConfirmedAnswer;
+exports.notAllowed = notAllowed;
+exports.successful = successful;

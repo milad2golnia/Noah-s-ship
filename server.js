@@ -10,6 +10,7 @@ const question = require('./routers/question');
 const answer = require('./routers/answer');
 const gateway = require('./middleWares/auth');
 const cors = require('cors');
+const dbSync = require('./index');
 const app = express();
 
 const share = express.static("public");

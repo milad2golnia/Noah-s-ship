@@ -59,6 +59,27 @@ router.post('/', async (req, res)=>{
 });
 
 
+router.put('/', async(req, res)=>{
+    try{
+        await userDB.update({ isAdmin: true }, {
+            where:{
+                email: req.user.email
+            }
+        });
+        
+        return res.status(200).send({
+            message: messages.successful
+        });
+        
+    }catch(error){
+        log("Error when promoting to admin: ", error.message);
+        return res.status(500).send({
+            message: messages.error500
+        })
+    }
+})
+
+
 router.post('/guarantee/', async (req, res)=>{
 
     const schema = joi.object({
