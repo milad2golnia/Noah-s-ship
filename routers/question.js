@@ -12,7 +12,7 @@ const QuestionFavorite = require('../models/questionFavorite');
 const {Op} = require('sequelize');
 const AnswerModel = require('../models/answer');
 
-router.get('/list/:offset/:limit', auth, async (req, res) =>{
+router.get('/list/:offset/:limit', async (req, res) =>{
     const _offset = req.params.offset;
     const _limit = req.params.limit;
 
@@ -84,7 +84,7 @@ router.get('/list/:offset/:limit', auth, async (req, res) =>{
 });
 
 
-router.get('/info/:id', auth, async (req, res)=>{
+router.get('/info/:id', async (req, res)=>{
     const _id = req.params.id;
     
     if(_id < 0){
@@ -129,7 +129,7 @@ router.get('/info/:id', auth, async (req, res)=>{
     }
 })
           
-router.post('/', auth, async (req, res)=>{
+router.post('/', async (req, res)=>{
     const result = QuestionModel.validateQuestion(req.body);
 
     if(result.error){

@@ -8,6 +8,7 @@ const UserFavortieModel = require('../models/userFavorite');
 const log = debug('app::user');
 const messages = require('../messages');
 const router = express.Router();
+const auth = require('../middleWares/auth');
 
 router.post('/', async (req, res)=>{
     const schema = joi.object({
@@ -59,7 +60,7 @@ router.post('/', async (req, res)=>{
 });
 
 
-router.put('/', async(req, res)=>{
+router.put('/',auth , async(req, res)=>{
     try{
         await userDB.update({ isAdmin: true }, {
             where:{
@@ -80,7 +81,7 @@ router.put('/', async(req, res)=>{
 })
 
 
-router.post('/guarantee/', async (req, res)=>{
+router.post('/guarantee/', auth ,async (req, res)=>{
 
     const schema = joi.object({
         amount: joi.number().max(400000).min(10000).required(),
@@ -145,7 +146,7 @@ router.post('/guarantee/', async (req, res)=>{
 });
 
 
-router.get('/guarantee/', async (req,res)=>{
+router.get('/guarantee/',auth, async (req,res)=>{
     if(!req.user){
         log('User field is empty');
         return res.status(400).send({
