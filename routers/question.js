@@ -73,6 +73,7 @@ router.get('/list/:offset/:limit', auth, async (req, res) =>{
                 where:whereClause
             }) );
         }
+        
         res.send(result);
     }catch(error){
         log('Error when sending question paged: ', error.message);
