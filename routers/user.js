@@ -28,9 +28,9 @@ router.post('/', async (req, res)=>{
         });
     }
 
-    const _user = userDB.findByPk(req.body.email)
+    const _user = await userDB.findByPk(req.body.email)
 
-    if (_user) return res.status(200).send({message: messages.existsUser})
+    if (_user != null) return res.status(200).send({message: messages.existsUser})
 
     try{
         log(req.body.password);
@@ -43,11 +43,13 @@ router.post('/', async (req, res)=>{
 
         const favorites = req.body.favorites;
 
-        for (favorite of favorites){
-            await UserFavortieModel.create({
-                userEmail: user.email,
-                favoriteId: favorite
-            })
+        if (favorites != null){
+            for (favorite of favorites){
+                await UserFavortieModel.create({
+                    userEmail: user.email,
+                    favoriteId: favorite
+                })
+            }
         }
         
         return res.send(user);
