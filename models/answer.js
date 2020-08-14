@@ -28,7 +28,11 @@ text: {
 
 confirmed: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    allowNull: true,
+    defaultValue: null,
+    validate: {
+        notEmpty: false
+    }
 }
 
 }, { 
