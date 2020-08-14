@@ -34,6 +34,7 @@ router.post('/', async (req, res)=>{
             const _answer = await AnswerModel.Answer.create({
                 title: req.body.title,
                 text: req.body.text,
+                price: req.body.price,
                 userEmail: _user.email,
                 questionId: req.body.questionId
             });

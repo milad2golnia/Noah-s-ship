@@ -26,6 +26,15 @@ text: {
     }
 },
 
+price: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    validate: {
+        min: 0,
+        notEmpty: true
+    }
+},
+
 confirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: true,
@@ -48,6 +57,7 @@ function validateAnswer(answer) {
     const schema = joi.object({
         title: joi.string().min(3).max(255).required(),
         text: joi.string().min(3).max(500).required(),
+        price: joi.number().integer().min(0),
         questionId: joi.number().integer().required()
     });
   
