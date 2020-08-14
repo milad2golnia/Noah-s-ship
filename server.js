@@ -25,10 +25,10 @@ app.use(CO);
 app.options('*', cors()) 
 
 app.use('/auth/', auth);
+app.use('/user/', user);
 
 app.use(gateway);
 
-app.use('/user/', user);
 app.use('/question/', question);
 app.use('/favorite/', favorite);
 app.use('/answer/', answer);
