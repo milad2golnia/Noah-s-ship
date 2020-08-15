@@ -28,10 +28,10 @@ text: {
 
 price: {
     type: Sequelize.FLOAT,
-    allowNull: false,
+    allowNull: true,
     validate: {
         min: 0,
-        notEmpty: true
+        notEmpty: false
     }
 },
 
@@ -57,7 +57,7 @@ function validateAnswer(answer) {
     const schema = joi.object({
         title: joi.string().min(3).max(255).required(),
         text: joi.string().min(3).max(500).required(),
-        price: joi.number().integer().min(0),
+        price: joi.number().integer().min(0).required(),
         questionId: joi.number().integer().required()
     });
   

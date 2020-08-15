@@ -37,7 +37,6 @@ Sale.belongsTo(Answer);
 
 function validateSale(sale) {
     const schema = joi.object({
-        price: joi.number().integer().min(0).required(),
         point: joi.number().integer().min(0).max(5).required(),
         answerId: joi.number().integer().required()
     })
