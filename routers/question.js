@@ -148,12 +148,15 @@ router.post('/', async (req, res)=>{
 
         const favorites = req.body.favorites;
         
-        for (favorite of favorites){
-            await QuestionFavoriteModel.create({
-                questionId: question.id,
-                favoriteId: favorite 
-            });
+        if (favorites != null){
+            for (favorite of favorites){
+                await QuestionFavoriteModel.create({
+                    questionId: question.id,
+                    favoriteId: favorite 
+                });
         }
+
+    }
 
         return res.status(200).send(question);
     }catch(error){
