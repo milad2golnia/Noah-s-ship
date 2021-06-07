@@ -1,0 +1,82 @@
+/*Import fonts from google:*/
+
+@import "https://fonts.googleapis.com/css?family=Gaegu";
+
+
+@media only screen and (max-width:620px){
+    #content-frame, #notification{
+        width: 90%;
+    }
+}
+
+
+body {
+    background-image: url("../public/pictures/iutTheBest.jpg");
+    background-attachment: fixed;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    /*while our image doesn't fit the entire screen width, we should centerize it:*/
+    background-position: 50%;
+    background-color: black;
+    font-size: 2vw;
+    color: white;
+
+
+    /*change cursor shape to cursor:wait when user clicked on the link*/
+}
+
+
+
+
+#content-frame {
+    background-color: rgba(255, 255, 255, 0.15);
+    background-clip: padding-box;
+    border-style: dotted;
+    border-width: thick;
+    border-color: rgba(255, 50, 50, 0.2);
+    border-radius: 12px;
+
+    /*centerize frame regarding to responsive:*/
+    max-width: 50%;
+    height: 80vh;
+    margin: 10vh auto 0px;
+    padding: 20px 50px;
+    box-sizing: border-box;
+
+    /*centerize inner elements:*/
+    text-align: center;
+    align-items: center;
+
+}
+
+#notification{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    max-width: 20%;
+    max-height: 100vh;
+
+    /*add scrollbar if needed:*/
+    overflow: auto;
+}
+
+
+address {
+    position: fixed;
+    bottom: 0.2vw;
+    left: 0.2vw;
+    color: rgba(100,100,100);
+    font-size: 1.3vw;
+    font-family: Gaegu;
+}
+
+
+a:visited{
+    color: darkgreen;
+}
+
+a:hover{
+    color: aqua;
+    font-size: 1.5vw;
+}

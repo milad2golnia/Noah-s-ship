@@ -24,15 +24,15 @@ app.use(express.json());
 app.use(CO);
 app.options('*', cors()) 
 
-app.use('/auth/', auth);
-app.use('/user/', user);
+//app.use('/auth/', auth);
+//app.use('/user/', user);
 
-app.use(gateway);
+//app.use(gateway);
 
-app.use('/question/', question);
-app.use('/favorite/', favorite);
-app.use('/answer/', answer);
-app.use('/sale/', sale);
+//app.use('/question/', question);
+//app.use('/favorite/', favorite);
+//app.use('/answer/', answer);
+//app.use('/sale/', sale);
 
 const log = debug('app::start');
 
